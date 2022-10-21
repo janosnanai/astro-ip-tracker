@@ -1,25 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MapElement from "../components/LeafletMap";
-import SearchBar from "../components/SearchBar";
-import SearchResult from "../components/SearchResult";
-import Snackbar from "../components/Snackbar";
+import SearchWidget from "../components/SearchWidget";
 ---
 
 <Layout title="IP tracker">
   <div class="flex flex-col h-screen">
-    <header class="h-20 mt-3">
+    <header class="h-11 mt-1">
       <h1 class="uppercase text-3xl text-emerald-400 font-mono text-center">
         ip_address_tracker
       </h1>
     </header>
     <main class="grow h-full">
-      <div class="absolute top-20 left-5 z-10 w-96">
-        <SearchBar client:load />
-        <SearchResult client:load />
+      <div class="absolute top-16 left-5 z-10 w-96">
+        <SearchWidget client:only="react" />
       </div>
       <MapElement client:only="react" />
-      <Snackbar client:load />
     </main>
   </div>
 </Layout>

@@ -1,51 +1,94 @@
-import { Disclosure, Transition } from "@headlessui/react";
-import { useStore } from "@nanostores/react";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { Disclosure } from "@headlessui/react";
+import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-import { ipGeoAtom } from "../utils/atoms/ipGeoAtom";
+import formatOffsetToUTC from "../utils/formatOffsetToUTC";
 
-function SearchResult() {
-  const ipGeoData = useStore(ipGeoAtom);
-
+function SearchResult({
+  ipGeoData,
+  onNewSearch,
+}: {
+  ipGeoData: IpGeoResponseData | null;
+  onNewSearch: () => void;
+}) {
   return (
     <div>
-      <Disclosure>
-        {({ open }) => (
-          <>
-            <Disclosure.Button className="w-full z-20 bg-zinc-800 text-zinc-400 mt-2 pr-1">
-              <div className="flex py-1 justify-between">
-                <p className="px-2">{ipGeoData?.ip || "no match found"}</p>
-                <ChevronLeftIcon
-                  className={`w-6 h-6 text-purple-400 transition ${
-                    open ? "-rotate-90 ease-out" : "rotate-0 ease-in"
+      <button
+        onClick={onNewSearch}
+        className="flex align-middle uppercase text-lg text-purple-500 hover:text-purple-400 transition-colors"
+      >
+        <ArrowLeftIcon className="my-auto h-6 w-6" />
+        <span>new search</span>
+      </button>
+      <div className="mt-2">
+        <Disclosure defaultOpen>
+          {({ open }) => (
+            <>
+              <ul>
+                <ListElement title="ip address" content={ipGeoData?.ip || ""} />
+                <Disclosure.Panel className="pb-1 text-zinc-400">
+                  {ipGeoData && (
+                    <>
+                      <ListElement
+                        title="organization"
+                        content={ipGeoData?.organization}
+                        ruler
+                      />
+                      <ListElement
+                        title="country"
+                        content={ipGeoData?.country_name}
+                        ruler
+                      />
+                      <ListElement title="city" content={ipGeoData?.city} />
+                      <ListElement
+                        title="zip code"
+                        content={ipGeoData?.zipcode}
+                      />
+                      <ListElement
+                        title="timezone"
+                        content={formatOffsetToUTC(ipGeoData?.time_zone.offset)}
+                        ruler
+                      />
+                    </>
+                  )}
+                </Disclosure.Panel>
+              </ul>
+              <Disclosure.Button className="w-full text-purple-500 hover:text-purple-400">
+                <ChevronDownIcon
+                  className={`w-6 h-6 m-auto transition ${
+                    open ? "-rotate-180 ease-out" : "rotate-0 ease-in"
                   }`}
                 />
-              </div>
-            </Disclosure.Button>
-            <Transition
-              enter="transition ease-out"
-              enterFrom="scale-y-0 -translate-y-1/2"
-              enterTo="scale-y-100 translate-y-0"
-              leave="transition ease-in"
-              leaveFrom="scale-y-100 translate-y-0"
-              leaveTo="scale-y-0 -translate-y-1/2"
-            >
-              <Disclosure.Panel className="px-2 py-1 bg-zinc-800 text-zinc-400">
-                {ipGeoData && (
-                  <ul>
-                    <li>{`org: ${ipGeoData.organization}`}</li>
-                    <li>{`country: ${ipGeoData.country_name}`}</li>
-                    <li>{`city: ${ipGeoData.city}`}</li>
-                    <li>{`zip: ${ipGeoData.zipcode}`}</li>
-                  </ul>
-                )}
-              </Disclosure.Panel>
-            </Transition>
-          </>
-        )}
-      </Disclosure>
+              </Disclosure.Button>
+            </>
+          )}
+        </Disclosure>
+      </div>
     </div>
   );
 }
 
 export default SearchResult;
+
+function ListElement({
+  title,
+  content,
+  ruler = false,
+}: {
+  title: string;
+  content: string;
+  ruler?: boolean;
+}) {
+  return (
+    <>
+      {ruler && (
+        <div className="m-2 h-0.5 rounded-full bg-gradient-to-r from-zinc-800 via-zinc-500 to-zinc-800" />
+      )}
+      <li className="flex items-center my-1">
+        <p className="w-28 px-2 uppercase text-xs text-zinc-400">{title}</p>
+        <p className="w-60 whitespace-normal tracking-wide text-zinc-300">
+          {content}
+        </p>
+      </li>
+    </>
+  );
+}

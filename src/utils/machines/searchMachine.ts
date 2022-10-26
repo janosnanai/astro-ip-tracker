@@ -71,6 +71,7 @@ export const searchMachine =
               },
             },
             valid: {
+              entry: "assignValidationResultToContext",
               on: {
                 EXEC_SEARCH: {
                   target: "fetching",
@@ -137,8 +138,12 @@ export const searchMachine =
         },
         inputValid: (context, _event) => {
           const validationResult = validateAddress(context.searchInput);
-          // little sketchy but this way its only validated once
-          assign({ validationResult });
+          // // little sketchy but this way its only validated once
+          // assign(() => {
+          //   return {
+          //     validationResult,
+          //   };
+          // });
           return validationResult.isValid;
         },
       },
@@ -150,6 +155,12 @@ export const searchMachine =
         }),
         assignResultToContext: assign((_context, event) => {
           return { searchResult: event.data as IpGeoResponseData };
+        }),
+        assignValidationResultToContext: assign((context, _event) => {
+          const validationResult = validateAddress(context.searchInput);
+          console.log(JSON.stringify(validationResult));
+
+          return { validationResult };
         }),
         assignErrorToContext: assign((_context, event) => {
           return { error: event.data as Error };

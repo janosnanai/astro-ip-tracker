@@ -28,6 +28,7 @@ export interface Typegen0 {
     assignErrorToContext: "error.platform.searchMachine.accepting_search_input.fetching:invocation[0]";
     assignInputToContext: "INPUT_CHANGE";
     assignResultToContext: "done.invoke.searchMachine.accepting_search_input.fetching:invocation[0]";
+    assignValidationResultToContext: "xstate.after(300)#searchMachine.accepting_search_input.to_be_validated";
     resetInput: "INPUT_CHANGE" | "NEW_SEARCH" | "RETRY" | "xstate.init";
     resetMap: "INPUT_CHANGE" | "NEW_SEARCH" | "RETRY" | "xstate.init";
     resetResult: "error.platform.searchMachine.accepting_search_input.fetching:invocation[0]";

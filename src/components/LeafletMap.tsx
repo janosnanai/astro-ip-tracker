@@ -112,7 +112,7 @@ function LeafletMap() {
       zoom={coords ? 13 : 5}
       minZoom={3}
       zoomControl={false}
-      className="min-h-[300px] h-full w-full z-0 !bg-zinc-700"
+      className="min-h-[300px] h-full w-full z-0 !bg-zinc-500"
     >
       <p className="absolute bottom-5 z-50 text-red-500">{coords}</p>
       <TileLayer

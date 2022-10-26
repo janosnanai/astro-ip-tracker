@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import SearchLoading from "./SearchLoading";
 import SearchError from "./SearchError";
 import SearchResult from "./SearchResult";
-import { searchMachine } from "../utils/machines/searchMachine";
+import { searchMachine } from "../../utils/machines/searchMachine";
 
 function SearchWidget() {
   const [state, send] = useMachine(searchMachine);
@@ -30,14 +30,15 @@ function SearchWidget() {
   }
 
   return (
-    <div className="bg-zinc-900 p-3 backdrop-blur rounded-xl shadow-lg">
+    <div className="bg-violet-50 dark:bg-zinc-900 bg-gradient-to-br from-transparent to-indigo-800/30 border border-violet-500 overflow-hidden rounded-xl shadow-lg">
       {state.matches("accepting_search_input") &&
         !state.matches("accepting_search_input.fetching") && (
           <SearchBar
             searchInput={state.context.searchInput}
+            validatedType={state.context.validationResult?.type}
             valid={state.matches("accepting_search_input.valid")}
             invalid={state.matches("accepting_search_input.invalid")}
-            unValidated={state.matches(
+            unvalidated={state.matches(
               "accepting_search_input.to_be_validated"
             )}
             {...{ onChange, onSubmit }}

@@ -15,7 +15,7 @@ import { useEventHandlers } from "@react-leaflet/core";
 
 import { ipGeoAtom } from "../utils/atoms/ipGeoAtom";
 
-import "leaflet/dist/leaflet.css";
+import "./leaflet.css";
 
 function MinimapBounds({ parentMap, zoom }: { parentMap: any; zoom: number }) {
   const minimap = useMap();

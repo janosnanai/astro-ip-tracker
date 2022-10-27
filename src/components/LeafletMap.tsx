@@ -63,7 +63,7 @@ function MinimapControl({ zoom }: { zoom?: number }) {
         scrollWheelZoom={false}
         attributionControl={false}
         zoomControl={false}
-        className="h-32 w-40"
+        className="h-20 sm:h-32 w-24 sm:w-40"
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MinimapBounds parentMap={parentMap} zoom={mapZoom} />

@@ -158,8 +158,6 @@ export const searchMachine =
         }),
         assignValidationResultToContext: assign((context, _event) => {
           const validationResult = validateAddress(context.searchInput);
-          console.log(JSON.stringify(validationResult));
-
           return { validationResult };
         }),
         assignErrorToContext: assign((_context, event) => {

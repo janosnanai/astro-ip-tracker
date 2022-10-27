@@ -15,7 +15,7 @@ import { useEventHandlers } from "@react-leaflet/core";
 
 import { ipGeoAtom } from "../utils/atoms/ipGeoAtom";
 
-import "./leaflet.css";
+import "leaflet/dist/leaflet.css";
 
 function MinimapBounds({ parentMap, zoom }: { parentMap: any; zoom: number }) {
   const minimap = useMap();
@@ -44,6 +44,7 @@ function MinimapBounds({ parentMap, zoom }: { parentMap: any; zoom: number }) {
     { instance: parentMap },
     handlers
   );
+  if (typeof window === "undefined") return null;
 
   return <Rectangle bounds={bounds} pathOptions={{ weight: 1 }} />;
 }
@@ -71,6 +72,7 @@ function MinimapControl({ zoom }: { zoom?: number }) {
     ),
     []
   );
+  if (typeof window === "undefined") return null;
 
   return (
     <div className="absolute right-5 bottom-7">
@@ -92,6 +94,9 @@ function LocationMarker({
     if (!coords) return;
     map.flyTo(coords, 13, { animate: true, duration: 1.5 });
   }, [coords]);
+
+  if (typeof window === "undefined") return null;
+
   return (
     <Marker position={coords}>
       <Popup>{popupContent}</Popup>
@@ -105,6 +110,8 @@ function LeafletMap() {
   const coords: LatLngTuple | null = ipGeoData
     ? [Number(ipGeoData.latitude), Number(ipGeoData.longitude)]
     : null;
+
+  if (typeof window === "undefined") return null;
 
   return (
     <MapContainer

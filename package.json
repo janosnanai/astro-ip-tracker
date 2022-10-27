@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@astrojs/netlify": "^1.2.0",
     "@astrojs/react": "^1.2.0",
     "@astrojs/tailwind": "^2.0.2",
     "@headlessui/react": "^1.7.3",
